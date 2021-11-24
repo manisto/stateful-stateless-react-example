@@ -19,6 +19,7 @@ app.listen(port, () => {
 
 app.get("/", allCards);
 app.get("/:id", oneCard);
+app.delete("/:id", deleteCard);
 
 function allCards(request: Request, response: Response, next: NextFunction) {
     return response.status(200).json(cards);
@@ -27,4 +28,10 @@ function allCards(request: Request, response: Response, next: NextFunction) {
 function oneCard(request: Request, response: Response, next: NextFunction) {
     const id: number = parseInt(request.params["id"]);
     return response.status(200).json(cards[id]);
+}
+
+function deleteCard(request: Request, response: Response) {
+    const id: number = parseInt(request.params["id"]);
+    cards.splice(id, 1);
+    return response.status(200).end();
 }

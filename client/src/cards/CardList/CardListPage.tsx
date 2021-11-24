@@ -7,22 +7,26 @@ type CardListPageProps = {};
 const CardListPage: FC<CardListPageProps> = () => {
     const [cards, setCards] = useState<Card[]>([]);
 
-    useEffect(() => {
-        async function loadCards() {
-            const response = await fetch("http://localhost:3001");
-            const responseCards = await response.json();
-            setCards(responseCards);
-        }
+    async function loadCards() {
+        const response = await fetch("http://localhost:3001");
+        const responseCards = await response.json();
+        setCards(responseCards);
+    }
 
+    async function deleteCard(index: number) {
+        debugger;
+        await fetch(`http://localhost:3001/${index}`, {
+            method: "DELETE"
+        });
+        await loadCards();
+    }
+
+    useEffect(() => {
         loadCards();
     }, []);
 
-    function cardDeleted(index: number) {
-        console.log(`Would have deleted card at index ${index}`);
-    }
-
     return (
-        <CardList cards={cards} cardDeleted={cardDeleted} />
+        <CardList cards={cards} cardDeleted={deleteCard} />
     )
 };
 
