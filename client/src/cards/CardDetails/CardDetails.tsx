@@ -1,5 +1,8 @@
 import React from "react";
 import { Card } from "../Card";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 type CardDetailsProps = {
     card: Card
@@ -16,16 +19,16 @@ const fields: CardKeys[] = [
 ];
 
 const CardDetails: React.FC<CardDetailsProps> = ({ card }) => (
-    <form>
+    <Form>
         {fields.map(field => (
-            <div className="row mb-3">
-                <label className="col-sm-2 col-form-label">{field}</label>
-                <div className="col-sm-10">
-                    <input readOnly type="text" className="form-control" value={card[field]} />
-                </div>
-            </div>
+            <Form.Group as={Row} className={"mb-3"} key={field}>
+                <Form.Label htmlFor={field} column sm={2}>{ field }</Form.Label>
+                <Col sm={10}>
+                    <Form.Control name={field} id={field} readOnly type="text" value={card[field]} />
+                </Col>
+            </Form.Group>
         ))}
-    </form>
+    </Form>
 );
 
 export default CardDetails;
